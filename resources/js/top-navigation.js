@@ -7,6 +7,11 @@ const handleTopbarAndSidebarHover = () => {
     const topbarNav = document.querySelector('.fi-topbar > nav');
     const sidebarHeader = document.querySelector('.fi-sidebar-header');
 
+    // Check if topbarNav exists before adding event listeners
+    if (!topbarNav) {
+        return;
+    }
+
     const addHoveredClass = () => {
         topbarNav.classList.add('topbar-hovered');
         if (sidebarHeader) {
@@ -33,6 +38,11 @@ const handleTopbarAndSidebarHover = () => {
 const handleScroll = () => {
     const topbarNav = document.querySelector('.fi-topbar > nav');
     const sidebarHeader = document.querySelector('.fi-sidebar-header');
+
+    // Check if topbarNav exists before adding event listeners
+    if (!topbarNav) {
+        return;
+    }
 
     window.addEventListener('scroll', () => {
         if (window.scrollY > 0) {
