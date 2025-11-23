@@ -12,12 +12,14 @@ use App\Utilities\Currency\CurrencyAccessor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use Wallo\FilamentCompanies\Events\AddingCompany;
 use Wallo\FilamentCompanies\FilamentCompanies;
 use Wallo\FilamentCompanies\Pages\Company\CreateCompany as FilamentCreateCompany;
@@ -45,17 +47,22 @@ class CreateCompany extends FilamentCreateCompany
         return true;
     }
 
+    public static function getLabel(): string
+    {
+        return 'Create School';
+    }
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->label(__('filament-companies::default.labels.company_name'))
+                    ->label('School name')
                     ->autofocus()
                     ->maxLength(255)
                     ->softRequired(),
                 TextInput::make('profile.email')
-                    ->label('Company email')
+                    ->label('School email')
                     ->email()
                     ->softRequired(),
                 Select::make('profile.entity_type')
@@ -125,5 +132,14 @@ class CreateCompany extends FilamentCreateCompany
 
             return $company;
         });
+    }
+
+    protected function companyCreated($name): void
+    {
+        Notification::make()
+            ->title('School created')
+            ->success()
+            ->body(Str::inlineMarkdown("A new school has been created with the name **{$name}**."))
+            ->send();
     }
 }

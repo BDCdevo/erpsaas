@@ -84,8 +84,8 @@ class CompanyPanelProvider extends PanelProvider
 
         return $panel
             ->default()
-            ->id('company')
-            ->path('company')
+            ->id('school')
+            ->path('school')
             ->login(Login::class)
             ->when(! $isDemoEnvironment, function (Panel $panel) {
                 return $panel
