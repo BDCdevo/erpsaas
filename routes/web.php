@@ -1,16 +1,21 @@
 <?php
 
-use App\Http\Controllers\DocumentPrintController;
-use App\Http\Middleware\AllowSameOriginFrame;
-use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 Route::get('/', function () {
-    return redirect(Filament::getDefaultPanel()->getUrl());
+    return redirect('/school');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('documents/{documentType}/{id}/print', [DocumentPrintController::class, 'show'])
-        ->middleware(AllowSameOriginFrame::class)
-        ->name('documents.print');
-});
+// Public routes for terms and privacy (without auth/session requirements)
+Route::get('/terms', function () {
+    $termsFile = resource_path('markdown/terms.md');
+    $terms = Str::markdown(file_get_contents($termsFile));
+    return view('public.terms', compact('terms'));
+})->name('public.terms');
+
+Route::get('/privacy', function () {
+    $policyFile = resource_path('markdown/policy.md');
+    $policy = Str::markdown(file_get_contents($policyFile));
+    return view('public.policy', compact('policy'));
+})->name('public.privacy');
