@@ -4,6 +4,8 @@ return [
     App\Providers\AppServiceProvider::class,
     App\Providers\Filament\CompanyPanelProvider::class,
     App\Providers\Filament\UserPanelProvider::class,
+    App\Providers\Filament\TasksPanelProvider::class,
+    App\Providers\Filament\HrmPanelProvider::class,
     App\Providers\Faker\FakerServiceProvider::class,
     App\Providers\MacroServiceProvider::class,
     App\Providers\SquireServiceProvider::class,
